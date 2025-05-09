@@ -3,7 +3,7 @@
     "qrscan - Scan a QR code in the terminal using the system camera or a given image";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/dbc366296d8450ccddba6d29486679f4ef3ca868"; # Rust 1.74.1
     nix.url = "github:domenkozar/nix/relaxed-flakes";
     flake-compat = {
       url = "github:edolstra/flake-compat";
