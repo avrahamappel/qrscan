@@ -3,7 +3,7 @@
     "qrscan - Scan a QR code in the terminal using the system camera or a given image";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
     nix.url = "github:domenkozar/nix/relaxed-flakes";
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -45,9 +45,10 @@
       devShells = forAllSystems (system:
         let
           pkgs = import nixpkgs { inherit system; };
+          inherit (pkgs) lib stdenv;
           devRequirements = with pkgs; [
-            gcc
-            gnumake
+            # gcc
+            # gnumake
             clippy
             cargo
             rustc
@@ -60,11 +61,16 @@
         {
           default = pkgs.mkShell {
             RUST_BACKTRACE = 1;
-            LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+            # LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
 
             buildInputs = devRequirements;
             packages = devRequirements;
-            nativeBuildInputs = [ pkgs.rustPlatform.bindgenHook ];
+            nativeBuildInputs =
+              # [ pkgs.rustPlatform.bindgenHook ] ++
+              lib.optionals stdenv.isDarwin (with pkgs; [
+                iconv
+                zlib
+              ]);
           };
         });
     };

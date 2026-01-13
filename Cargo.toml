@@ -12,14 +12,14 @@ keywords = ['qrcode', 'qr', 'scan', 'reader', 'scanner']
 categories = ['command-line-interface', 'command-line-utilities']
 
 [dependencies]
-qrencode = "0.14.0"
-image = "0.24.6"
-rqrr = "0.6.0"
+qrencode = { version = "0.14.0", features = ["svg"] }
+image = "0.25.9"
+rqrr = "0.7.0"
 clap = { version = "4.3.9", features = ["derive"] }
 anyhow = "1.0.71"
 csscolorparser = "0.6.2"
-viuer = "0.6.2"
-nokhwa = { version = "0.10.4", features = ["input-native"] }
+viuer = "0.8.0"
+nokhwa = { version = "0.10.6", features = ["input-native"] }
 
 [dev-dependencies]
 assert_cmd = "2.0.11"
