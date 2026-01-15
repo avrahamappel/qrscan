@@ -113,7 +113,7 @@ struct Args {
 fn capture(args: &Args) -> Result<()> {
     let index = CameraIndex::Index(0);
     // let format = CameraFormat::new_from(640, 480, FrameFormat::YUYV, 30);
-    let formattyp = RequestedFormatType::None;
+    let formattyp = RequestedFormatType::AbsoluteHighestFrameRate;
     let requested = RequestedFormat::new::<RgbFormat>(formattyp);
 
     let mut camera = Camera::new(index, requested)?;
