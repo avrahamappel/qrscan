@@ -1,15 +1,15 @@
 use anyhow::Result;
 use clap::Parser;
-//use csscolorparser::Color;
-//use image::codecs::jpeg::JpegEncoder;
-//use image::codecs::png::PngEncoder;
-use image::ImageReader;
-//use image::ColorType;
+use csscolorparser::Color;
 use image::DynamicImage;
-//use image::EncodableLayout;
-//use image::ImageBuffer;
-//use image::ImageEncoder;
-//use image::Rgba;
+use image::ImageReader;
+use image_24::codecs::jpeg::JpegEncoder;
+use image_24::codecs::png::PngEncoder;
+use image_24::ColorType;
+use image_24::EncodableLayout;
+use image_24::ImageBuffer;
+use image_24::ImageEncoder;
+use image_24::Rgba;
 use nokhwa::pixel_format::RgbFormat;
 use nokhwa::utils::CameraIndex;
 use nokhwa::utils::RequestedFormat;
@@ -169,20 +169,20 @@ fn scan_file(args: &Args, path: &PathBuf) -> Result<()> {
     print_image(args, &image)
 }
 
-//fn build_binary_image(
-//    content: &str,
-//    (dr, dg, db, da): (u8, u8, u8, u8),
-//    (lr, lg, lb, la): (u8, u8, u8, u8),
-//    quiet_zone: bool,
-//) -> Result<ImageBuffer<Rgba<u8>, Vec<u8>>> {
-//    let img = QrCode::new(content)?
-//        .render::<Rgba<u8>>()
-//        .quiet_zone(quiet_zone)
-//        .dark_color(Rgba([dr, dg, db, da]))
-//        .light_color(Rgba([lr, lg, lb, la]))
-//        .build();
-//    Ok(img)
-//}
+fn build_binary_image(
+    content: &str,
+    (dr, dg, db, da): (u8, u8, u8, u8),
+    (lr, lg, lb, la): (u8, u8, u8, u8),
+    quiet_zone: bool,
+) -> Result<ImageBuffer<Rgba<u8>, Vec<u8>>> {
+    let img = QrCode::new(content)?
+        .render::<Rgba<u8>>()
+        .quiet_zone(quiet_zone)
+        .dark_color(Rgba([dr, dg, db, da]))
+        .light_color(Rgba([lr, lg, lb, la]))
+        .build();
+    Ok(img)
+}
 
 fn print_image(args: &Args, image: &DynamicImage) -> Result<()> {
     let image = image.to_luma8();
@@ -276,45 +276,45 @@ fn print_image(args: &Args, image: &DynamicImage) -> Result<()> {
         }
 
         // RGB colors
-        //let dark = dark.parse::<Color>()?.to_linear_rgba_u8();
-        //let light = light.parse::<Color>()?.to_linear_rgba_u8();
+        let dark = dark.parse::<Color>()?.to_linear_rgba_u8();
+        let light = light.parse::<Color>()?.to_linear_rgba_u8();
 
         // PNG
-        //if let Some(path) = args.png.as_ref() {
-        //    let image = build_binary_image(&content, dark, light, !args.no_quiet_zone)?;
-        //    let bytes = image.as_bytes();
-        //
-        //    let mut result: Vec<u8> = Default::default();
-        //    let encoder = PngEncoder::new(&mut result);
-        //    encoder.write_image(
-        //        bytes,
-        //        image.width(),
-        //        image.height(),
-        //        ColorType::Rgba8,
-        //    )?;
-        //
-        //    if path.to_str() == Some("-") {
-        //        std::io::stdout().write_all(&result)?;
-        //    } else {
-        //        std::fs::write(path, result)?
-        //    }
-        //}
+        if let Some(path) = args.png.as_ref() {
+            let image = build_binary_image(&content, dark, light, !args.no_quiet_zone)?;
+            let bytes = image.as_bytes();
+
+            let mut result: Vec<u8> = Default::default();
+            let encoder = PngEncoder::new(&mut result);
+            encoder.write_image(
+                bytes,
+                image.width(),
+                image.height(),
+                ColorType::Rgba8,
+            )?;
+
+            if path.to_str() == Some("-") {
+                std::io::stdout().write_all(&result)?;
+            } else {
+                std::fs::write(path, result)?
+            }
+        }
 
         // JPEG
-        //if let Some(path) = args.jpeg.as_ref() {
-        //    let image = build_binary_image(&content, dark, light, !args.no_quiet_zone)?;
-        //    let bytes = image.as_bytes();
-        //
-        //    let mut result: Vec<u8> = Default::default();
-        //    let mut encoder = JpegEncoder::new(&mut result);
-        //    encoder.encode(bytes, image.width(), image.height(), ColorType::Rgba8)?;
-        //
-        //    if path.to_str() == Some("-") {
-        //        std::io::stdout().write_all(&result)?;
-        //    } else {
-        //        std::fs::write(path, result)?
-        //    }
-        //}
+        if let Some(path) = args.jpeg.as_ref() {
+            let image = build_binary_image(&content, dark, light, !args.no_quiet_zone)?;
+            let bytes = image.as_bytes();
+
+            let mut result: Vec<u8> = Default::default();
+            let mut encoder = JpegEncoder::new(&mut result);
+            encoder.encode(bytes, image.width(), image.height(), ColorType::Rgba8)?;
+
+            if path.to_str() == Some("-") {
+                std::io::stdout().write_all(&result)?;
+            } else {
+                std::fs::write(path, result)?
+            }
+        }
     } else {
         std::thread::sleep(Duration::from_millis(args.inverval));
         anyhow::bail!("failed to read")
