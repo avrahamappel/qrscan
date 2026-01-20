@@ -3,15 +3,10 @@
     "qrscan - Scan a QR code in the terminal using the system camera or a given image";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
-    nix.url = "github:domenkozar/nix/relaxed-flakes";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
+    nixpkgs.url = "github:nixos/nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nix, ... }:
+  outputs = { self, nixpkgs, ... }:
     let
       systems = [
         "x86_64-linux"
