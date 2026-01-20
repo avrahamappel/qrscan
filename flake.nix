@@ -66,10 +66,7 @@
             packages = devRequirements;
             nativeBuildInputs =
               [ pkgs.rustPlatform.bindgenHook ] ++
-              lib.optionals stdenv.isDarwin (with pkgs; [
-                iconv
-                zlib
-              ]);
+              lib.optional stdenv.isDarwin pkgs.zlib;
           };
         });
     };
