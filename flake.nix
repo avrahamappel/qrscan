@@ -61,12 +61,11 @@
         {
           default = pkgs.mkShell {
             RUST_BACKTRACE = 1;
-            # LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
 
             buildInputs = devRequirements;
             packages = devRequirements;
             nativeBuildInputs =
-              # [ pkgs.rustPlatform.bindgenHook ] ++
+              [ pkgs.rustPlatform.bindgenHook ] ++
               lib.optionals stdenv.isDarwin (with pkgs; [
                 iconv
                 zlib
