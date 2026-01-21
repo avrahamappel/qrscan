@@ -32,7 +32,7 @@
         let pkgs = import nixpkgs { inherit system; };
         in
         {
-          qrscan = pkgs.rustPlatform.buildRustPackage rec {
+          qrscan = pkgs.rustPlatform.buildRustPackage {
             name = "qrscan";
             src = ./.;
             cargoLock = { lockFile = ./Cargo.lock; };
@@ -46,8 +46,6 @@
           pkgs = import nixpkgs { inherit system; };
           inherit (pkgs) lib stdenv;
           devRequirements = with pkgs; [
-            # gcc
-            # gnumake
             clippy
             cargo
             rustc
