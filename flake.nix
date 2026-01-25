@@ -29,11 +29,18 @@
     in
     {
       packages = forAllSystems (system:
-        let pkgs = import nixpkgs { inherit system; };
+        let
+          pkgs = import nixpkgs { inherit system; };
+          version = builtins.concatStringsSep "-" [
+            (builtins.substring 0 4 self.lastModifiedDate)
+            (builtins.substring 4 2 self.lastModifiedDate)
+            (builtins.substring 6 2 self.lastModifiedDate)
+          ];
         in
         {
           qrscan = pkgs.rustPlatform.buildRustPackage {
-            name = "qrscan";
+            pname = "qrscan";
+            inherit version;
             src = ./.;
             cargoLock = { lockFile = ./Cargo.lock; };
             nativeBuildInputs = [ pkgs.rustPlatform.bindgenHook ];
