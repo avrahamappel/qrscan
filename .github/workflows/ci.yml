@@ -51,10 +51,9 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
       - name: Run tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --verbose
+        run: |
+          cargo build
+          cargo test --verbose $CARGO_OPTIONS
 
   clippy:
     name: Lints
