@@ -20,7 +20,7 @@ rqrr = "0.7.0"
 clap = { version = "4.3.9", features = ["derive"] }
 anyhow = "1.0.71"
 csscolorparser = "0.8.1"
-viuer = "0.8.0"
+viuer = "0.11.0"
 nokhwa = { version = "0.10.6", features = ["input-native"] }
 
 [dev-dependencies]
