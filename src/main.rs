@@ -49,7 +49,7 @@ struct Args {
     #[clap(long, default_value = "0")]
     preview_x: u16,
 
-    /// Preview diaplay's y coordinate (works with --preview)
+    /// Preview display's y coordinate (works with --preview)
     #[clap(long, default_value = "0")]
     preview_y: i16,
 
@@ -73,9 +73,9 @@ struct Args {
     #[clap(long, short)]
     no_content: bool,
 
-    /// Interval between scans in milisecond
+    /// Interval between scans in milliseconds
     #[clap(long, short, default_value = "200")]
-    inverval: u64,
+    interval: u64,
 
     /// Invert the QR code colors
     #[clap(long)]
@@ -316,7 +316,7 @@ fn print_image(args: &Args, image: &DynamicImage) -> Result<()> {
             }
         }
     } else {
-        std::thread::sleep(Duration::from_millis(args.inverval));
+        std::thread::sleep(Duration::from_millis(args.interval));
         anyhow::bail!("failed to read")
     };
 
