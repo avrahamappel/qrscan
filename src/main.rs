@@ -171,15 +171,15 @@ fn scan_file(args: &Args, path: &PathBuf) -> Result<()> {
 
 fn build_binary_image(
     content: &str,
-    (dr, dg, db, da): (u8, u8, u8, u8),
-    (lr, lg, lb, la): (u8, u8, u8, u8),
+    dark_color: [u8; 4],
+    light_color: [u8; 4],
     quiet_zone: bool,
 ) -> Result<ImageBuffer<Rgba<u8>, Vec<u8>>> {
     let img = QrCode::new(content)?
         .render::<Rgba<u8>>()
         .quiet_zone(quiet_zone)
-        .dark_color(Rgba([dr, dg, db, da]))
-        .light_color(Rgba([lr, lg, lb, la]))
+        .dark_color(Rgba(dark_color))
+        .light_color(Rgba(light_color))
         .build();
     Ok(img)
 }
