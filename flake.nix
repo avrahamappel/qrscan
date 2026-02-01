@@ -31,11 +31,7 @@
       packages = forAllSystems (system:
         let
           pkgs = import nixpkgs { inherit system; };
-          version = builtins.concatStringsSep "-" [
-            (builtins.substring 0 4 self.lastModifiedDate)
-            (builtins.substring 4 2 self.lastModifiedDate)
-            (builtins.substring 6 2 self.lastModifiedDate)
-          ];
+          version = if self ? shortRev then self.shortRev else "dirty";
         in
         {
           qrscan = pkgs.rustPlatform.buildRustPackage {
