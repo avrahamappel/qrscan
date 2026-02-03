@@ -17,7 +17,7 @@ image = "0.25.9"
 # Expose the version of image that qrencode depends on
 image-24 = { version = "0.24.9", package = "image" }
 rqrr = "0.10.1"
-clap = { version = "4.3.9", features = ["derive"] }
+clap = { version = "4.5.56", features = ["derive"] }
 anyhow = "1.0.71"
 csscolorparser = "0.8.1"
 viuer = "0.11.0"
