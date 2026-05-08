@@ -1,6 +1,7 @@
 use anyhow::Result;
 use clap::Parser;
 use csscolorparser::Color;
+use image::buffer::ConvertBuffer;
 use image::codecs::jpeg::JpegEncoder;
 use image::codecs::png::PngEncoder;
 use image::ColorType;
@@ -9,6 +10,7 @@ use image::EncodableLayout;
 use image::ImageBuffer;
 use image::ImageEncoder;
 use image::ImageReader;
+use image::Rgb;
 use image::Rgba;
 use nokhwa::pixel_format::RgbFormat;
 use nokhwa::utils::CameraIndex;
@@ -303,6 +305,8 @@ fn print_image(args: &Args, image: &DynamicImage) -> Result<()> {
         // JPEG
         if let Some(path) = args.jpeg.as_ref() {
             let image = build_binary_image(&content, dark, light, !args.no_quiet_zone)?;
+            // Remove alpha channel from image, not supported by JPEG
+            let image: ImageBuffer<Rgb<u8>, _> = image.convert();
             let bytes = image.as_bytes();
 
             let mut result: Vec<u8> = Default::default();
@@ -311,7 +315,7 @@ fn print_image(args: &Args, image: &DynamicImage) -> Result<()> {
                 bytes,
                 image.width(),
                 image.height(),
-                ColorType::Rgba8.into(),
+                ColorType::Rgb8.into(),
             )?;
 
             if path.to_str() == Some("-") {
