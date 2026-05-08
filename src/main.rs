@@ -1,15 +1,15 @@
 use anyhow::Result;
 use clap::Parser;
 use csscolorparser::Color;
+use image::codecs::jpeg::JpegEncoder;
+use image::codecs::png::PngEncoder;
+use image::ColorType;
 use image::DynamicImage;
+use image::EncodableLayout;
+use image::ImageBuffer;
+use image::ImageEncoder;
 use image::ImageReader;
-use image_24::codecs::jpeg::JpegEncoder;
-use image_24::codecs::png::PngEncoder;
-use image_24::ColorType;
-use image_24::EncodableLayout;
-use image_24::ImageBuffer;
-use image_24::ImageEncoder;
-use image_24::Rgba;
+use image::Rgba;
 use nokhwa::pixel_format::RgbFormat;
 use nokhwa::utils::CameraIndex;
 use nokhwa::utils::RequestedFormat;
@@ -290,7 +290,7 @@ fn print_image(args: &Args, image: &DynamicImage) -> Result<()> {
                 bytes,
                 image.width(),
                 image.height(),
-                ColorType::Rgba8,
+                ColorType::Rgba8.into(),
             )?;
 
             if path.to_str() == Some("-") {
@@ -307,7 +307,12 @@ fn print_image(args: &Args, image: &DynamicImage) -> Result<()> {
 
             let mut result: Vec<u8> = Default::default();
             let mut encoder = JpegEncoder::new(&mut result);
-            encoder.encode(bytes, image.width(), image.height(), ColorType::Rgba8)?;
+            encoder.encode(
+                bytes,
+                image.width(),
+                image.height(),
+                ColorType::Rgba8.into(),
+            )?;
 
             if path.to_str() == Some("-") {
                 std::io::stdout().write_all(&result)?;
