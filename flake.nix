@@ -43,7 +43,11 @@
             pname = "qrscan";
             inherit version;
             src = ./.;
-            cargoLock = { lockFile = ./Cargo.lock; };
+            cargoLock = {
+              lockFile = ./Cargo.lock;
+              outputHashes."qrencode-0.14.0" =
+                "sha256-95+HB0wxlSNe87o24A6wXsZKcVDYpq5rEEnooxsen6s=";
+            };
             nativeBuildInputs = [ pkgs.rustPlatform.bindgenHook ];
             doCheck = false; # No access to internet
           };
