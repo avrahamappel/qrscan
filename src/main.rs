@@ -43,6 +43,10 @@ struct Args {
     #[clap(value_parser)]
     image: Option<PathBuf>,
 
+    /// The index of the system camera to use
+    #[clap(long, short, default_value = "0")]
+    camera_index: u32,
+
     /// Preview the camera on the terminal (if compatible)
     #[clap(long, short)]
     preview: bool,
@@ -113,7 +117,7 @@ struct Args {
 }
 
 fn capture(args: &Args) -> Result<()> {
-    let index = CameraIndex::Index(0);
+    let index = CameraIndex::Index(args.camera_index);
     // let format = CameraFormat::new_from(640, 480, FrameFormat::YUYV, 30);
     let formattyp = RequestedFormatType::AbsoluteHighestFrameRate;
     let requested = RequestedFormat::new::<RgbFormat>(formattyp);
