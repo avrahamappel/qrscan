@@ -282,8 +282,8 @@ fn print_image(args: &Args, image: &DynamicImage) -> Result<()> {
         }
 
         // RGB colors
-        let dark = dark.parse::<Color>()?.to_linear_rgba_u8();
-        let light = light.parse::<Color>()?.to_linear_rgba_u8();
+        let dark = dark.parse::<Color>()?.to_rgba8();
+        let light = light.parse::<Color>()?.to_rgba8();
 
         // PNG
         if let Some(path) = args.png.as_ref() {
