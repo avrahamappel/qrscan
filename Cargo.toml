@@ -1,13 +1,13 @@
 [package]
 name = "qrscan"
 description = "Scan a QR code in the terminal using the system camera or a given image"
-version = "0.1.9"
+version = "1.0.0"
 edition = "2021"
-authors = ['Arijit Basu <hi@arijitbasu.in>']
+authors = ['Arijit Basu <hi@arijitbasu.in>', 'Avraham Appel']
 license = 'MIT'
 readme = 'README.md'
-repository = 'https://github.com/sayanarijit/qrscan'
-homepage = 'https://github.com/sayanarijit/qrscan'
+repository = 'https://github.com/avrahamappel/qrscan'
+homepage = 'https://github.com/avrahamappel/qrscan'
 keywords = ['qrcode', 'qr', 'scan', 'reader', 'scanner']
 categories = ['command-line-interface', 'command-line-utilities']
 
